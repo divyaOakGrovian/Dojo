@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+    <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <meta http-equiv="X-UA-Compatible" content="ie=edge">
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+                integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+            {% load static %}
+            <link rel="stylesheet" href="{% static 'beltApp/css/style.css' %}">
+            <title>The Wishing App</title>
+        </head>
+        <body>
+            <div name="container">
+                <h1 class="text-left m-4">Welcome! Sign in to manage your jobs!</h1>
+                <div class="row ml-4">
+                    <div class="col-md-4">
+                        <h3>Register</h3>
+                        <form class="form" action="/register" method="POST">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                {% if messages %}
+                                    {% for message in messages %}
+                                        {% if 'firstname_notExists' in message.tags or 'firstname_minLength' in message.tags or 'firstname_maxLength' in message.tags %}
+                                            <p class="red">{{ message }}</p>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endif %} 
+
+                                <label for="usrfn">First Name:</label>
+                                <input type="text" class="form-control" id="usrfn" name="firstname">
+                            </div>
+
+                            <div class="form-group">
+                                {% if messages %}
+                                    {% for message in messages %}
+                                        {% if 'lastname_notExists' in message.tags or 'lastname_minLength' in message.tags or 'lastname_maxLength' in message.tags %}
+                                            <p class="red">{{ message }}</p>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endif %} 
+
+                                <label for="usrln">Last Name:</label>
+                                <input type="text" class="form-control" id="usrln" name="lastname">
+                            </div>
+                            
+                            <div class="form-group">                                
+                                {% if messages %}
+                                    {% for message in messages %}
+                                        {% if 'rm_notExists' in message.tags or 'rm_minLength' in message.tags or 'rm_format' in message.tags or 'rm_duplication' in message.tags%}
+                                            <p class="red">{{ message }}</p>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endif %} 
+
+                                <label for="usrem">Email:</label>
+                                <input type="text" class="form-control" id="usrem" name="email">
+                            </div>
+
+                            <div class="form-group">
+                                {% if messages %}
+                                    {% for message in messages %}
+                                        {% if 'password_notExists' in message.tags or 'password_minLength' in message.tags or 'password_maxLength' in message.tags or 'password_format' in message.tags %}
+                                            <p class="red">{{ message }} </p>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endif %} 
+
+                                <label for="pwd">Password:</label>
+                                <input type="password" class="form-control" id="pwd" name="password">
+                            </div>
+
+                            <div class="form-group">
+                                {% if messages %}
+                                    {% for message in messages %}
+                                        {% if 'cnfmpassword' in message.tags %}
+                                            <p class="red">{{ message }}</p>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endif %} 
+
+                                <label for="cnfmpassword">Confirm Password:</label>
+                                <input type="password" class="form-control" id="cnfmpwd" name="cnfmpassword">
+                            </div>
+                            <button type="submit" class="btn btn-primary col-lg-3">Register</button>
+
+                        </form>
+                    </div>
+
+                    <div class="col-md-4 ml-5">
+                        <h3>Login</h3>
+                        <form class="form" action="/login" method="POST">
+                            {% csrf_token %}
+                            <div class="form-group">     
+                                {% if messages %}
+                                    {% for message in messages %}
+                                        {% if 'notExists_email' in message.tags or 'minLength_email' in message.tags or 'format_email' in message.tags or 'user_notExists' in message.tags %}
+                                            <p class="red">{{ message }}</p>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endif %}
+
+                                <label for="usrem">Email:</label>
+                                <input type="text" class="form-control" id="usrem" name="loginemail">
+                            </div>
+
+                            <div class="form-group">
+                                {% if messages %}
+                                    {% for message in messages %}
+                                        {% if 'loginPwd' in message.tags %}
+                                            <p class="red">{{ message }}</p>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endif %}
+
+                                <label for="lpwd">Password:</label>
+                                <input type="password" class="form-control" id="lpwd" name="loginpassword">
+                            </div>
+                            <button type="submit" class="btn btn-primary col-lg-3">Login</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </body>
+    </html>

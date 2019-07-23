@@ -1,0 +1,9 @@
+.red {
+    color: red;
+}
+
+.logout a {
+    vertical-align: right;
+    display: inline-block;
+}
+

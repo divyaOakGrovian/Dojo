@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'beltApp/css/style.css' %}">
+    <title>New Job</title>
+</head>
+<body>
+    <div class="container">
+        <div class="logout">
+            <div class="container text-center pd-5 mt-5">
+                <a href="/logout" class="btn btn-primary mt-4">Logout</a>
+                <!-- <a href="/shows" class="btn btn-primary mt-4">Upcoming Shows</a> -->
+                <hr>
+                <h2>Hello {{usr.first_name}}! Create a job!</h2>
+                <hr>
+                <form class="form" action="/createJob" method="POST">
+                    {% csrf_token %}                                                                       
+                    <table class="table table-bordered table-striped">
+                        <tbody>
+                            {% if messages %}
+                                {% for message in messages %}
+                                    {% if 'jobTitle_notExists' in message.tags or 'jobTitle_minLength' in message.tags %}
+                                        <p class="red">{{ message }}</p>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}                           
+                            <tr> 
+                                <td><label for="title">Title:</label></td>
+                                <td><input type="text" class="form-control" id="title" name="title"></td>
+                            </tr> 
+                            
+                            {% if messages %}
+                                {% for message in messages %}
+                                    {% if 'jobDescription_notExists' in message.tags or 'jobDescription_minLength' in message.tags %}
+                                        <p class="red">{{ message }}</p>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}         
+                            <tr> 
+                                    <td><label for="desc">Description:</label></td>
+                                    <td><input type="text" class="form-control" id="desc" name="desc"></td>
+                            </tr>
+                            
+                            {% if messages %}
+                                {% for message in messages %}
+                                    {% if 'jobCategory_notExists' in message.tags %}
+                                        <p class="red">{{ message }}</p>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %} 
+                            <tr>
+                                <td>Category:</td>
+                                <td>
+                                    <input type="radio" id="pet" name="category" value="Pet Care">
+                                    <label for="pet">Pet Care</label>
+                                    <input type="radio" id="garden" name="category" value="Garden">
+                                    <label for="garden">Garden</label>
+                                    <input type="radio" id="electrical" name="category" value="Electrical">
+                                    <label for="electrical">Electrical</label>
+                                </td>
+                            </tr>
+                                                   
+                            <!-- {% if messages %}
+                                {% for message in messages %}
+                                    {% if 'eventDate_notExists' in message.tags or 'eventDate_invalid' in message.tags %}
+                                        <p class="red">{{ message }}</p>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %} -->
+                            <tr> 
+                                <td><label for="other">Other:</label></td>
+                                <td><input type="text" class="form-control" id="other" name="other"></td>
+                            </tr>
+
+                            {% if messages %}
+                                {% for message in messages %}
+                                    {% if 'jobLocation_notExists' in message.tags or 'jobLocation_minLength' in message.tags%}
+                                        <p class="red">{{ message }} </p>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                            <tr> 
+                                <td><label for="location">Location:</label></td>
+                                <td><input type="text" class="form-control" id="location" name="location"></td>
+                            </tr>
+                            <tr>
+                                <td><a href="/dashboard" class="btn btn-primary mt-4">Cancel</a></td>
+                                <td><button type="submit" class="btn btn-primary col-lg-4">Submit</button></td>
+                            </tr>
+                        </tbody>
+                    </table>                       
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

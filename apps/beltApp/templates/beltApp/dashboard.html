@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'beltApp/css/style.css' %}">
+    <title>Handy Helper Dashboard</title>
+</head>
+<body>
+    <div class="container">
+        <div class="logout">
+            <div class="container text-center pd-5 mt-5">
+                <h1>Hello {{ usr.first_name }}!</h1>
+                <a href="/logout" class="btn btn-primary mt-4">Logout</a>
+                <a href="/newJob" class="btn btn-primary mt-4">New Job!</a>
+                <hr>
+                <h3>Everyone's jobs:</h3>
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Job</th>
+                            <th>Location</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for j in allJobs %}
+                        {% if j not in uJobs %}
+                        <tr>
+                            <td>{{ j.title }}</td>
+                            <td>{{ j.location}}</td>
+                            <td>
+                                <a href="/dashboard/{{j.id}}" class="btn btn-primary mt-4">View</a> |
+                                {% if usr == j.creator  %}
+                                <a href="/removeJob/{{j.id}}" class="btn btn-primary mt-4">Remove</a> |
+                                <a href="/editJob/{{j.id}}" class="btn btn-primary mt-4">Edit</a> |
+                                {% endif %}
+                                <a href="/addJob/{{j.id}}" class="btn btn-primary mt-4">Add</a>
+                            </td>
+                        </tr>
+                        {% endif %}
+                        {% endfor %}
+                    </tbody>    
+                </table>                
+            </div>
+        
+            <div class="col mt-10">
+                <h2>Jon's jobs</h2>
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Job</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for uj in uJobs %}
+                        <tr>
+                            <td>{{ uj.title  }}</td>
+                            <td>
+                                <a href="/dashboard/{{uj.id}}" class="btn btn-primary mt-4">View</a> |
+                                <a href="/removeJob/{{uj.id}}" class="btn btn-primary mt-4">Done</a> |
+                                <a href="/dropJob/{{uj.id}}" class="btn btn-primary mt-4">Give up</a> 
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div> 
+    </div>
+</body>
+</html>
